@@ -71,3 +71,5 @@ enum CutDirection
 
 https://nlml.github.io/neural-networks/detecting-bpm-neural-networks/
 https://towardsdatascience.com/audio-classification-using-fastai-and-on-the-fly-frequency-transforms-4dbe1b540f89
+
+http://www.ofai.at/~jan.schlueter/pubs/2014_icassp.pdf
