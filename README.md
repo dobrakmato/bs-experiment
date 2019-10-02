@@ -24,7 +24,7 @@ Each note in beat saber has horizontal and vertical position (one of 12 position
 ### Beat saber file (enums) reference
 
 ```typescript
-enum HorizontalPosition
+enum HorizontalPosition // (_lineIndex)
 {
     Left = 0,
     CenterLeft = 1,
@@ -32,7 +32,7 @@ enum HorizontalPosition
     Right = 3
 }
 
-enum VerticalPosition
+enum VerticalPosition // (_lineLayer)
 {
     Bottom = 0,
     Middle = 1,

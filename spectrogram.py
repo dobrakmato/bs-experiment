@@ -13,7 +13,7 @@ clip_length = len(clip) / sample_rate
 
 # 1 beat = quarter note
 samples_per_beat = 60 * sample_rate / tempo
-samples_per_segment = samples_per_beat / 32  # to get 1/32
+samples_per_segment = samples_per_beat / 8  # to get 1/32
 
 print("tempo=", tempo)
 print("clip_length=", clip_length)

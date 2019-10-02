@@ -1,32 +1,26 @@
 import numpy as np
-import random
-import keras
-from keras.layers import Dense, LSTM
 from keras.models import Sequential
-import matplotlib.pyplot as plt
-from keras.utils import plot_model
+from keras.layers import Dense, Dropout
 
-from tensorflow.python.client import device_lib
-print(device_lib.list_local_devices())
+# Generate dummy data
+x_train = np.random.random((1000, 20))
+y_train = np.random.randint(2, size=(1000, 1))
+x_test = np.random.random((100, 20))
+y_test = np.random.randint(2, size=(100, 1))
 
-data = np.array([[random.random() * 10] for _ in range(20)])
-labels = np.array([x ** 1/2 for x in data])
+model = Sequential()
+model.add(Dense(64, input_dim=20, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
 
-model = Sequential([
-    Dense(1, input_dim=1),
-    Dense(256),
-    Dense(1),
-])
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
 
-#plot_model(model, to_file='model.png')
-
-model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
-history = model.fit(data, labels, epochs=5000)
-
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['loss'])
-plt.title('input ' + str(16))
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['accuracy', 'loss'], loc='upper left')
-plt.show()
+model.fit(x_train, y_train,
+          epochs=20,
+          batch_size=128)
+score = model.evaluate(x_test, y_test, batch_size=128)
+print(score)
