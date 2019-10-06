@@ -5,7 +5,7 @@ import numpy as np
 import soundfile
 import matplotlib.pyplot as plt
 
-clip, sample_rate = librosa.load('songs/beatsaber.ogg', None)
+clip, sample_rate = librosa.load('beatmaps/ogg/9d31d3aab3d58ab540df63caed06d62ff1cfefdd.ogg', None)
 # beats = librosa.onset.onset_detect(clip, sample_rate, units='samples')
 tempo, beats = librosa.beat.beat_track(clip, sample_rate, units='samples')
 
