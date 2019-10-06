@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-from beatmap2numpy import beatmap2numpy
+from beatmap2numpy import beatmap2f24, beatmap2onset
 from functions import list_songs
 
 os.makedirs('./labels', exist_ok=True)
@@ -20,7 +20,7 @@ maps = 0
 offenders = []
 
 for f in list_songs(diff):
-    H, bpm, es, cc, seg = beatmap2numpy(f, diff, precision)
+    H, bpm, es, cc, seg = beatmap2onset(f, diff, precision)
     empty_segments += es
     collision_count += cc
     total_segments += seg
@@ -31,7 +31,7 @@ for f in list_songs(diff):
     if cc > 0:
         offenders.append((cc, f))
 
-    np.save(f'./labels/{f}', np.rot90(H))
+    np.save(f'./labels/{f}', H)
 
 print('============================================================')
 print('precision=', precision)

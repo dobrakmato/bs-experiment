@@ -1,23 +1,36 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
+import matplotlib.pyplot as plt
 
-# Generate dummy data
-x = np.random.randint(0, 2, size=(1000, 16))
-y = [n[0] for n in x]
-y = np.array(y)
-x_train = x[:900]
-y_train = y[:900]
-x_test = x[900:]
-y_test = y[900:]
+from tensorflow import keras
 
-model = Sequential()
-model.add(Dense(1, input_dim=16))
+y = np.load('labels/00e5671e594a6fe621c3605fcc5a0e4466ba6478.npy')
+x = np.rot90(np.load('spectro/00e5671e594a6fe621c3605fcc5a0e4466ba6478.npy'))
+x = x[0:y.shape[0]]
+x = np.expand_dims(x, axis=2)
+
+print('x.shape', x.shape)
+print('y.shape', y.shape)
+
+model = keras.Sequential()
+model.add(keras.layers.LSTM(128))
+model.add(keras.layers.Dense(1, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy',
               optimizer='rmsprop',
               metrics=['accuracy'])
 
-model.fit(x_train, y_train, epochs=75)
-score = model.evaluate(x_test, y_test)
-print(score)
+history = model.fit(x, y, epochs=250, shuffle=False)
+print(model.summary())
+# score = model.evaluate(x_test, y_test)
+# print(score)
+
+
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['loss'])
+plt.title('onset by neural network')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['accuracy', 'loss'], loc='upper left')
+plt.show()
